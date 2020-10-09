@@ -95,26 +95,8 @@ X_Val = X_Val.reshape(X_Val.shape[0], 28, 28, 1)
 print(y_train)
 print(X_train.shape)
 print(y_train.shape)
-"""
-model = models.Sequential()
-model.add(layers.Conv2D(32,(1,1),activation ='elu',input_shape =(28,28,1)))
-model.add(layers.MaxPooling2D((2,2)))
-model.add(layers.BatchNormalization())
-model.add(layers.Conv2D(64,(1,1),activation ='elu'))
-model.add(layers.MaxPooling2D((2,2)))
-model.add(layers.BatchNormalization())
-model.add(layers.Conv2D(128,(1,1),activation ='elu'))
-model.add(layers.MaxPooling2D((2,2)))
-model.add(layers.BatchNormalization())
-model.add(layers.Conv2D(128,(1,1),activation ='elu'))
-model.add(layers.MaxPooling2D((2,2)))
-model.add(layers.BatchNormalization())
-model.add(layers.Flatten())
-model.add(layers.Dropout(0.3))
-model.add(layers.Dense(512,activation='elu'))
-model.add(layers.Dense(1,activation='softmax'))
-model.summary()
-"""
+
+
 import keras
 from keras.models import Sequential
 from keras.utils import np_utils
@@ -187,3 +169,15 @@ history = model.fit_generator(train_gen,
 model.save_weights('model_weights.h5')
 model.save("group_24.h5")
 
+
+"""
+CATEGORIES = [0, 1,2,3,4,5,6,7,8,9]
+
+from keras.models import load_model
+
+model = load_model('group_24.h5')
+print(train_pixels[0])
+prediction = model.predict(train_pixels[0])
+print(prediction)
+print(CATEGORIES[int(prediction[0][0])])
+"""
