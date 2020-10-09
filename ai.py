@@ -9,6 +9,7 @@ import cv2
 import matplotlib.pyplot as plt
 import pandas as pd
 import matplotlib.image as mpimg
+import tensorflow
 
 PATH_TRAIN = "trainset.csv"
 PATH_TEST = "testset.csv"
