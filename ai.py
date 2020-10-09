@@ -16,10 +16,15 @@ PATH_TRAIN = "trainset.csv"
 PATH_TEST = "testset.csv"
 PATH_SAMPLE = "samplesubmission.csv" 
 
-print("Hej")
 
-WIDTH =  14
-HEIGHT = 56
+
+
+def show_image(images,i):
+    import matplotlib.pyplot as plt
+    import matplotlib.image as mpimg
+    plt.imshow(images[i], cmap='gray', vmin=0, vmax=255)
+    plt.show()
+
 def lr_schedule(epoch):
     lrate = 0.001
     if epoch > 75:
@@ -43,6 +48,7 @@ def row_to_matrix_train(list1,amount_image):
         i +=1
         if i > amount_image:
             break
+
     return result,labels    
 
 
@@ -50,6 +56,7 @@ def open_csv(PATH):
     reader = csv.reader(open(PATH, "rt",encoding= 'utf-8'), delimiter=",")
     x = list(reader)
     del x[0] #removes labels_name,pixels name row
+    del (reader)
     return x
 
        
@@ -66,12 +73,7 @@ print(type(train_pixels))
 #train_pixels = (train_pixels-mean)/(std+1e-7)
 #x_test = (x_test-mean)/(std+1e-7)
  
-from PIL import Image
 #print((train_pixels[0]))
 print(train_pixels[0])
 print(train_labels)
 
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
-plt.imshow(train_pixels[0], cmap='gray', vmin=0, vmax=255)
-plt.show()
