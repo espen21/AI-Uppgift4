@@ -84,17 +84,12 @@ train_pixels,train_labels = row_to_matrix_train(train_list,20000)
 #std = np.std(train_pixels,axis=(0,1,2,3))
 #train_pixels = (train_pixels-mean)/(std+1e-7)
 #x_test = (x_test-mean)/(std+1e-7)
- 
-print(len(train_pixels))
-print(len(train_labels))
+
 from sklearn.model_selection import train_test_split
 X_train, X_Val,y_train ,y_val = train_test_split(train_pixels,train_labels,test_size = 0.20,random_state = 2) 
 X_train = X_train.reshape(X_train.shape[0], 28, 28, 1)
 X_Val = X_Val.reshape(X_Val.shape[0], 28, 28, 1)
 
-print(y_train)
-print(X_train.shape)
-print(y_train.shape)
 
 
 import keras
@@ -108,7 +103,8 @@ from keras import regularizers
 from keras.callbacks import LearningRateScheduler
 weight_decay = 1e-4
 num_classes = 10
-
+print(X_train.shape[1:])
+print("baj")
 y_train = np_utils.to_categorical(y_train,num_classes)
 y_val = np_utils.to_categorical(y_val,num_classes)
 model = Sequential()
@@ -143,7 +139,7 @@ model.add(Flatten())
 model.add(Dense(num_classes, activation='softmax'))
  
 model.summary()
- 
+"""
 model.compile(loss='categorical_crossentropy', optimizer=optimizers.RMSprop(lr=0.001,decay=1e-6), metrics=['accuracy'])
 train_datagen = ImageDataGenerator(rescale=1./255,
                                    rotation_range=40,
@@ -170,7 +166,6 @@ model.save_weights('model_weights.h5')
 model.save("group_24.h5")
 
 
-"""
 CATEGORIES = [0, 1,2,3,4,5,6,7,8,9]
 
 from keras.models import load_model
