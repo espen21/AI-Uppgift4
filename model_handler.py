@@ -89,21 +89,16 @@ def show_image(images,i):
     plt.imshow(images[i], cmap='gray', vmin=0, vmax=255)
     plt.show()
 
-#train_list = open_csv(PATH_TRAIN)
-#train_pixels,labels = row_to_matrix_train(train_list,200)
-test_list = open_csv(PATH_TEST)
-test_pixels = row_to_matrix_test(test_list,200)
+train_list = open_csv(PATH_TRAIN)
+train_pixels,labels = row_to_matrix_train(train_list,2)
+#test_list = open_csv(PATH_TEST)
+#test_pixels = row_to_matrix_test(test_list,1)
+print(train_pixels)
 from keras.models import load_model 
 model = load_model('group_24.h5')
 model.load_weights("model_weights.h5")
 CLASSES = [0,1,2,3,4,5,6,7,8,9]
-#eva=model.evaluate(train_pixels,labels,32)
-
-pred = model.predict(test_pixels[:3])
+pred = model.predict(train_pixels)
 print(pred)
-"""
-for i in range(2):
-    
-    print(pred[i])
-    show_image(test_pixels,i)
-""" 
+print(labels)
+show_image(train_pixels,0)

@@ -59,8 +59,6 @@ def row_to_matrix_train(list1,amount_image):
     
 
     result = np.asarray(result)
-    result = result.reshape(result.shape[0], 28, 28, 1)
-    
     labels = np.asarray(labels)
 
     return result,labels    
@@ -76,7 +74,7 @@ def open_csv(PATH):
 
        
 train_list = open_csv(PATH_TRAIN)
-train_pixels,train_labels = row_to_matrix_train(train_list,2000)
+train_pixels,train_labels = row_to_matrix_train(train_list,20000)
 #print(train_labels)
 
 #test_list = open_csv(PATH_TEST)
@@ -89,10 +87,9 @@ train_pixels,train_labels = row_to_matrix_train(train_list,2000)
 
 from sklearn.model_selection import train_test_split
 X_train, X_Val,y_train ,y_val = train_test_split(train_pixels,train_labels,test_size = 0.20,random_state = 2) 
-#X_train = X_train.reshape(X_train.shape[0], 28, 28, 1)
-#X_Val = X_Val.reshape(X_Val.shape[0], 28, 28, 1)
-print(X_train.shape)
-print(X_Val.shape)
+X_train = X_train.reshape(X_train.shape[0], 28, 28, 1)
+X_Val = X_Val.reshape(X_Val.shape[0], 28, 28, 1)
+
 
 
 import keras
@@ -141,11 +138,8 @@ model.add(Dropout(0.4))
 model.add(Flatten())
 model.add(Dense(num_classes, activation='softmax'))
  
-
-
 model.summary()
-callback = keras.callbacks.EarlyStopping(monitor='loss', patience=3) 
-
+"""
 model.compile(loss='categorical_crossentropy', optimizer=optimizers.RMSprop(lr=0.001,decay=1e-6), metrics=['accuracy'])
 train_datagen = ImageDataGenerator(rescale=1./255,
                                    rotation_range=40,
@@ -172,4 +166,13 @@ model.save_weights('model_weights.h5')
 model.save("group_24.h5")
 
 
+CATEGORIES = [0, 1,2,3,4,5,6,7,8,9]
 
+from keras.models import load_model
+
+model = load_model('group_24.h5')
+print(train_pixels[0])
+prediction = model.predict(train_pixels[0])
+print(prediction)
+print(CATEGORIES[int(prediction[0][0])])
+"""
