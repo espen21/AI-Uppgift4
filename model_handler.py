@@ -90,12 +90,19 @@ def show_image(images,i):
     plt.show()
 
 train_list = open_csv(PATH_TRAIN)
-train_pixels,labels = row_to_matrix_train(train_list,200)
+train_pixels,labels = row_to_matrix_train(train_list,20000)
+train_pixels= train_pixels[19800:20000]
+labels = labels[19800:20000]
 #test_list = open_csv(PATH_TEST)
 #test_pixels = row_to_matrix_test(test_list,1)
 from keras.models import load_model 
 model = load_model('testAI.h5')
 model.load_weights("test_weights.h5")
+
+#model = load_model('group_24.h5')
+#model.load_weights("model_weights.h5")
+
+
 CLASSES = [0,1,2,3,4,5,6,7,8,9]
 
 

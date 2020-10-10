@@ -144,12 +144,3 @@ with open('model.json', 'w') as json_file:
 from keras.models import load_model
 model.save_weights('test_weights.h5')    
 model.save("testAI.h5")
-"""
-model = load_model('testAI.h5')
-pred = model.predict(x_train)
-print(pred[:3])
-print(y_train[:3])
-#testing
-#scores = model.evaluate(x_test, y_test, batch_size=128, verbose=1)
-#print('\nTest result: %.3f loss: %.3f' % (scores[1]*100,scores[0]))
-"""
