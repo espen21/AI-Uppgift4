@@ -74,7 +74,7 @@ def open_csv(PATH):
 
        
 train_list = open_csv(PATH_TRAIN)
-train_pixels,train_labels = row_to_matrix_train(train_list,2000)
+train_pixels,train_labels = row_to_matrix_train(train_list,20000)
 #print(train_labels)
 
 #test_list = open_csv(PATH_TEST)
