@@ -38,7 +38,7 @@ def row_to_matrix_train(list1,amount_images):
         matrix= matrix.reshape(28,28) #X_train = X_train.reshape(X_train.shape[0], 28, 28, 1)
         result.append(matrix)
         i +=1
-        if i >= amount_images:
+        if i >= amount_images  or i >= len(list1):
             break
     
 
@@ -64,7 +64,7 @@ def row_to_matrix_test(list1,amount_images):
 
         result.append(matrix)
         i +=1
-        if i >= amount_images:
+        if i >= amount_images or i >= len(list1):
             break
     
 
@@ -89,18 +89,22 @@ def show_image(images,i):
     plt.imshow(images[i], cmap='gray', vmin=0, vmax=255)
     plt.show()
 
-train_list = open_csv(PATH_TRAIN)
-train_pixels,labels = row_to_matrix_train(train_list,20000)
-train_pixels= train_pixels[19800:20000]
-labels = labels[19800:20000]
-#test_list = open_csv(PATH_TEST)
-#test_pixels = row_to_matrix_test(test_list,1)
-from keras.models import load_model 
-model = load_model('testAI.h5')
-model.load_weights("test_weights.h5")
+#train_list = open_csv(PATH_TRAIN)
+#train_pixels,labels = row_to_matrix_train(train_list,20000)
+#train_pixels= train_pixels[19800:20000]
+#labels = labels[19800:20000]
+test_list = open_csv(PATH_TEST)
+test_pixels = row_to_matrix_test(test_list,300000)
+print(len(test_pixels))
 
-#model = load_model('group_24.h5')
-#model.load_weights("model_weights.h5")
+from keras.models import load_model 
+#score 0.95363
+#model = load_model('4layers_group24.h5')
+#model.load_weights("4layers_model_weights.h5")
+
+#score 0.96321
+model = load_model('5_layers.h5')
+model.load_weights("5_layers_weights.h5")
 
 
 CLASSES = [0,1,2,3,4,5,6,7,8,9]
@@ -108,7 +112,7 @@ CLASSES = [0,1,2,3,4,5,6,7,8,9]
 
 #for i in range(len(labels)):
    # show_image(train_pixels,i)
-
+"""
 from keras.utils import np_utils
 num_classes = 10
 x_train = train_pixels.astype('float32')
@@ -123,3 +127,28 @@ print("labels",labels[20:40])
 print("pred  ",pred.astype("float32"))
 scores = model.evaluate(x_train, y_train, batch_size=128, verbose=1)
 print('\nTest result: %.3f loss: %.3f' % (scores[1]*100,scores[0]))
+
+"""
+
+
+from keras.utils import np_utils
+num_classes = 10
+x_test = test_pixels.astype('float32')
+mean = np.mean(x_test)
+std = np.std(x_test)
+x_test = (x_test-mean)/(std+1e-7)
+#y_train = np_utils.to_categorical(labels,num_classes)
+pred = np.argmax(model.predict(x_test),1)
+#scores = model.evaluate(x_train, y_train, batch_size=128, verbose=1)
+#print('\nTest result: %.3f loss: %.3f' % (scores[1]*100,scores[0]))
+
+
+import csv
+with open('submission.csv', 'w', newline='') as f:
+    writer = csv.writer(f)
+    writer.writerow(("ImageId","Label"))
+    img_id = 1
+    for value in pred:
+        
+        writer.writerow((str(img_id),str(value)))
+        img_id +=1

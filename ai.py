@@ -91,28 +91,38 @@ model.add(Conv2D(32, (3,3), padding='same', kernel_regularizer=regularizers.l2(w
 model.add(Activation('relu'))
 model.add(BatchNormalization())
 model.add(MaxPooling2D(pool_size=(2,2)))
-model.add(Dropout(0.3))
+model.add(Dropout(0.2))
  
 
 model.add(Conv2D(64, (3,3), padding='same', kernel_regularizer=regularizers.l2(weight_decay)))
 model.add(Activation('relu'))
 model.add(BatchNormalization())
 model.add(Conv2D(64, (3,3), padding='same', kernel_regularizer=regularizers.l2(weight_decay)))
+model.add(Activation('relu'))
+model.add(BatchNormalization())
+model.add(MaxPooling2D(pool_size=(2,2)))
+model.add(Dropout(0.3))
+ 
+
+model.add(Conv2D(128, (3,3), padding='same', kernel_regularizer=regularizers.l2(weight_decay)))
+model.add(Activation('relu'))
+model.add(BatchNormalization())
+model.add(Conv2D(128, (3,3), padding='same', kernel_regularizer=regularizers.l2(weight_decay)))
 model.add(Activation('relu'))
 model.add(BatchNormalization())
 model.add(MaxPooling2D(pool_size=(2,2)))
 model.add(Dropout(0.4))
  
-
-model.add(Conv2D(128, (3,3), padding='same', kernel_regularizer=regularizers.l2(weight_decay)))
+model.add(Conv2D(512, (3,3), padding='same', kernel_regularizer=regularizers.l2(weight_decay)))
 model.add(Activation('relu'))
 model.add(BatchNormalization())
-model.add(Conv2D(128, (3,3), padding='same', kernel_regularizer=regularizers.l2(weight_decay)))
+model.add(Conv2D(512, (3,3), padding='same', kernel_regularizer=regularizers.l2(weight_decay)))
 model.add(Activation('relu'))
 model.add(BatchNormalization())
 model.add(MaxPooling2D(pool_size=(2,2)))
 model.add(Dropout(0.5))
- 
+
+
 model.add(Flatten())
 model.add(Dense(NUM_CLASSES, activation='softmax'))
  
@@ -125,19 +135,14 @@ train_datagen = ImageDataGenerator(
     height_shift_range=0.1,
     horizontal_flip=True,
     )
-    
+
 train_datagen.fit(X_train)
 
 model.compile(loss='categorical_crossentropy', optimizer=keras.optimizers.RMSprop(lr=0.001,decay=1e-6), metrics=['accuracy'])
           
 
 
-"""
-model.fit(train_datagen.flow(X_train, y_train, batch_size=BATCH_SiZE),
-                    steps_per_epoch=X_train.shape[0] // BATCH_SiZE,epochs=32,
-                    validation_data=(X_Val,y_val),callbacks=[LearningRateScheduler(lrs)])
 
-"""
 
 model.fit(train_datagen.flow(X_train, y_train, batch_size=BATCH_SiZE),\
                     steps_per_epoch=X_train.shape[0] // BATCH_SiZE,epochs=64,\
