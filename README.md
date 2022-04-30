@@ -1,4 +1,5 @@
-# This was an assignment 4 in a AI-course at Uppsala University  
+#Image recognition
+This was an assignment 4 in a AI-course at Uppsala University  
  Image recognition assignment made with Tensorflow and keras in python. The assignment was to create a model that recognise handwritten digits. Our model got a accuracy of 97.7% on the submission set.
 
 Deeper explantion about the assignment https://www.kaggle.com/competitions/nn-assignment/overview
