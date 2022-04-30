@@ -4,6 +4,6 @@ This was an assignment 4 in a AI-course at Uppsala University
 
 Deeper explantion about the assignment https://www.kaggle.com/competitions/nn-assignment/overview
 
-Example of a digit(3):
+Example of a digit from the submission set:
 
 ![image](https://user-images.githubusercontent.com/31931020/166082145-f2e2d91c-c778-4cf8-a226-553b5c8dd7e7.png)
